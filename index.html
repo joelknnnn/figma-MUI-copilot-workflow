@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A practical workflow guide for converting Figma designs to production-ready React code using Claude Code and Material UI">
-    <title>Figma to Code with Claude Code & Material UI</title>
+    <meta name="description" content="A practical workflow guide for converting Figma designs to production-ready React code using GitHub Copilot Pro and Material UI">
+    <title>Figma to Code with GitHub Copilot Pro & Material UI</title>
     <style>
         * {
             margin: 0;
@@ -248,60 +248,50 @@
             color: var(--text);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .card h4 {
-            margin-top: 0;
-        }
-
         footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
-            margin-top: 3rem;
-            padding: 2rem;
+            margin-top: 4rem;
         }
 
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 2rem;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
         }
 
         .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
         }
 
         .footer-links a {
             color: var(--primary);
             text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.875rem;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
         }
 
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
         @media (max-width: 768px) {
-            .header-content, .nav-content, main, article {
+            .header-content,
+            .nav-content,
+            main,
+            .footer-content {
                 padding-left: 1rem;
                 padding-right: 1rem;
+            }
+
+            article {
+                padding: 1.5rem;
             }
 
             h1 {
@@ -312,12 +302,9 @@
                 font-size: 1.5rem;
             }
 
-            article {
-                padding: 1.5rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
+            .footer-links a {
+                display: block;
+                margin: 0.5rem 0;
             }
         }
     </style>
@@ -325,310 +312,450 @@
 <body>
     <header>
         <div class="header-content">
-            <h1>Figma to Code with Claude Code & Material UI</h1>
-            <p class="subtitle">A practical workflow for converting Figma designs to production-ready React code</p>
+            <h1>Figma to Code with GitHub Copilot Pro & Material UI</h1>
+            <p class="subtitle">A complete workflow for converting Figma designs to production-ready React components</p>
         </div>
     </header>
 
     <nav>
         <div class="nav-content">
+            <a href="#overview" class="nav-link">Overview</a>
             <a href="#prerequisites" class="nav-link">Prerequisites</a>
-            <a href="#part1" class="nav-link">Install Tools</a>
-            <a href="#part2" class="nav-link">Create Project</a>
-            <a href="#part3" class="nav-link">Configure Claude</a>
-            <a href="#part4" class="nav-link">Connect Figma</a>
-            <a href="#part5" class="nav-link">Workflow</a>
+            <a href="#setup-part1" class="nav-link">Part 1: Setup</a>
+            <a href="#setup-part2" class="nav-link">Part 2: Project</a>
+            <a href="#workflow" class="nav-link">Workflow</a>
             <a href="#pitfalls" class="nav-link">Common Issues</a>
-            <a href="#tips" class="nav-link">Best Practices</a>
+            <a href="#tips" class="nav-link">Tips</a>
             <a href="#reference" class="nav-link">Quick Reference</a>
         </div>
     </nav>
 
     <main>
         <article>
+            <section id="overview">
+                <h2>Overview</h2>
+                <p>This guide will show you how to convert Figma designs into production-ready React components using <strong>GitHub Copilot Pro</strong> with <strong>Figma MCP integration</strong> and <strong>Material UI</strong>.</p>
+                
+                <div class="callout callout-info">
+                    <strong>What you'll learn:</strong>
+                    <ul>
+                        <li>How to set up GitHub Copilot Pro with Figma MCP</li>
+                        <li>How to use Copilot Chat to generate components from Figma designs</li>
+                        <li>Best practices for design-to-code conversion</li>
+                        <li>Common pitfalls and how to avoid them</li>
+                    </ul>
+                </div>
+
+                <h3>Key Tools</h3>
+                <ul>
+                    <li><strong>GitHub Copilot Pro:</strong> AI pair programmer in VS Code</li>
+                    <li><strong>Figma MCP:</strong> Model Context Protocol for Figma integration</li>
+                    <li><strong>Material UI v6:</strong> React component library</li>
+                    <li><strong>Vite:</strong> Fast build tool for React</li>
+                    <li><strong>TypeScript:</strong> Type-safe JavaScript</li>
+                </ul>
+            </section>
+
             <section id="prerequisites">
                 <h2>Prerequisites</h2>
-                <div class="grid">
-                    <div class="card">
-                        <h4>Operating System</h4>
-                        <p>macOS 10.15 or later</p>
-                    </div>
-                    <div class="card">
-                        <h4>Subscription</h4>
-                        <p>Claude Pro or Max ($20-100/month)</p>
-                    </div>
-                    <div class="card">
-                        <h4>Design Tool</h4>
-                        <p>Figma Desktop App (not web version!)</p>
-                    </div>
-                    <div class="card">
-                        <h4>Development</h4>
-                        <p>GitHub account & VS Code</p>
-                    </div>
+                
+                <h3>Required Subscriptions</h3>
+                <ul>
+                    <li><strong>GitHub Copilot Pro</strong> subscription ($10/month)</li>
+                    <li><strong>Figma</strong> account (free or paid)</li>
+                </ul>
+
+                <h3>What You Need</h3>
+                <ul>
+                    <li>macOS, Windows, or Linux</li>
+                    <li>Basic command line knowledge (copy/paste commands)</li>
+                    <li>VS Code installed</li>
+                    <li>GitHub account</li>
+                </ul>
+
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> This guide assumes you're starting from scratch. If you already have some tools installed, you can skip those steps.
                 </div>
             </section>
 
-            <section id="part1">
-                <h2>Part 1: Install Development Tools</h2>
+            <section id="setup-part1">
+                <h2>Part 1: System Setup (One-time)</h2>
+                <p>Do these steps once to set up your development environment.</p>
 
-                <h3>1. Install Homebrew (Mac Package Manager)</h3>
+                <h3>1. Install Homebrew (macOS/Linux only)</h3>
+                <p>Open Terminal and paste:</p>
                 <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
                 
-                <p><strong>After installation</strong>, run the commands it shows you (usually):</p>
-                <pre><code>echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"</code></pre>
+                <div class="callout callout-info">
+                    <strong>Windows users:</strong> Skip Homebrew. Use the official installers from each tool's website.
+                </div>
 
-                <p><strong>Verify:</strong></p>
-                <pre><code>brew --version</code></pre>
-
-                <h3>2. Install Node.js</h3>
+                <h3>2. Install Node.js and npm</h3>
+                <p><strong>macOS/Linux:</strong></p>
                 <pre><code>brew install node</code></pre>
-
-                <p><strong>Verify:</strong></p>
+                <p><strong>Windows:</strong> Download from <a href="https://nodejs.org" target="_blank">nodejs.org</a></p>
+                
+                <p>Verify installation:</p>
                 <pre><code>node --version
 npm --version</code></pre>
 
-                <h3>3. Install GitHub CLI</h3>
+                <h3>3. Install VS Code</h3>
+                <ul>
+                    <li>Download from <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a></li>
+                    <li>Install and open VS Code</li>
+                </ul>
+
+                <h3>4. Install GitHub Copilot in VS Code</h3>
+                <ol>
+                    <li>Open VS Code</li>
+                    <li>Click Extensions icon (left sidebar) or press <code>Cmd+Shift+X</code> (Mac) / <code>Ctrl+Shift+X</code> (Windows)</li>
+                    <li>Search for "GitHub Copilot"</li>
+                    <li>Click <strong>Install</strong> on both:
+                        <ul>
+                            <li><strong>GitHub Copilot</strong></li>
+                            <li><strong>GitHub Copilot Chat</strong></li>
+                        </ul>
+                    </li>
+                    <li>Sign in with your GitHub account when prompted</li>
+                    <li>Verify Copilot Pro subscription is active</li>
+                </ol>
+
+                <div class="callout callout-success">
+                    <strong>Success indicator:</strong> You should see a GitHub Copilot icon in VS Code's left sidebar
+                </div>
+
+                <h3>5. Install GitHub CLI</h3>
+                <p><strong>macOS:</strong></p>
                 <pre><code>brew install gh</code></pre>
+                <p><strong>Windows:</strong></p>
+                <pre><code>winget install --id GitHub.cli</code></pre>
+                <p><strong>Linux:</strong> Follow instructions at <a href="https://github.com/cli/cli" target="_blank">github.com/cli/cli</a></p>
 
-                <p><strong>Authenticate:</strong></p>
-                <pre><code>gh auth login
-# Choose: GitHub.com → HTTPS → Login with browser</code></pre>
+                <p>Login to GitHub:</p>
+                <pre><code>gh auth login</code></pre>
+                <ul>
+                    <li>Choose: <code>GitHub.com</code></li>
+                    <li>Choose: <code>HTTPS</code></li>
+                    <li>Choose: <code>Login with a web browser</code></li>
+                    <li>Follow browser prompts</li>
+                </ul>
 
-                <h3>4. Install Claude Code CLI</h3>
-                <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+                <h3>6. Configure Git</h3>
+                <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"</code></pre>
 
-                <p><strong>Reload your shell:</strong></p>
-                <pre><code>source ~/.zshrc</code></pre>
+                <h3>7. Install Figma Desktop</h3>
+                <ul>
+                    <li>Download from <a href="https://figma.com/downloads" target="_blank">figma.com/downloads</a></li>
+                    <li>Install and sign in</li>
+                    <li><strong>Important:</strong> Keep Figma Desktop running (MCP requires it)</li>
+                </ul>
 
-                <p><strong>If .zshrc doesn't exist:</strong></p>
-                <pre><code>touch ~/.zshrc
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code></pre>
+                <h3>8. Enable Figma Dev Mode MCP</h3>
+                <ol>
+                    <li>Open <strong>Figma Desktop</strong> (not web version)</li>
+                    <li>Click <strong>Figma menu</strong> → <strong>Preferences</strong></li>
+                    <li>Go to <strong>Experimental Features</strong> or <strong>Advanced</strong> tab</li>
+                    <li>Enable <strong>"Dev Mode MCP Server"</strong></li>
+                    <li>Note the MCP URL: <code>http://127.0.0.1:3845/mcp</code></li>
+                </ol>
 
-                <p><strong>Verify:</strong></p>
-                <pre><code>claude --version</code></pre>
-            </section>
+                <div class="callout callout-warning">
+                    <strong>Critical:</strong> Figma Desktop must remain open while using MCP. The web version won't work.
+                </div>
 
-            <section id="part2">
-                <h2>Part 2: Create Your React Project</h2>
-
-                <h3>1. Create Project with Vite + TypeScript</h3>
-                <pre><code># Navigate to your projects folder
-cd ~/Documents  # or wherever you keep projects
-
-# Create new React project
-npm create vite@latest my-mui-project -- --template react-ts
-
-# Navigate into it
-cd my-mui-project
-
-# Install dependencies
-npm install</code></pre>
-
-                <h3>2. Install Material UI v6</h3>
-                <pre><code>npm install @mui/material @emotion/react @emotion/styled</code></pre>
-
-                <h3>3. Initialize Git and Push to GitHub</h3>
-                <pre><code># Initialize git
-git init
-git add .
-git commit -m "Initial commit: React + TypeScript + Vite"
-
-# Create repo on GitHub (opens browser)
-gh repo create my-mui-project --public --source=. --remote=origin --push</code></pre>
+                <h3>9. Configure GitHub Copilot to Use Figma MCP</h3>
+                <ol>
+                    <li>Open VS Code</li>
+                    <li>Press <code>Cmd+Shift+P</code> (Mac) / <code>Ctrl+Shift+P</code> (Windows)</li>
+                    <li>Type: <code>Preferences: Open User Settings (JSON)</code></li>
+                    <li>Add this configuration:</li>
+                </ol>
+                <pre><code>{
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    "github.copilot.chat.mcp": {
+        "enabled": true,
+        "servers": {
+            "figma": {
+                "command": "node",
+                "args": ["-e", "require('http').request('http://127.0.0.1:3845/mcp')"],
+                "url": "http://127.0.0.1:3845/mcp"
+            }
+        }
+    }
+}</code></pre>
 
                 <div class="callout callout-info">
-                    <strong>Alternative manual method:</strong>
-                    <ol>
-                        <li>Go to https://github.com/new</li>
-                        <li>Create repository (don't initialize with README)</li>
-                        <li>Run the commands GitHub shows you</li>
-                    </ol>
+                    <strong>Note:</strong> This configuration tells Copilot Chat how to connect to Figma's MCP server. Make sure Figma Desktop is running for this to work.
                 </div>
-
-                <p><strong>Set git identity (recommended):</strong></p>
-                <pre><code>git config --global user.name "Your Name"
-git config --global user.email "your.email@gmail.com"</code></pre>
             </section>
 
-            <section id="part3">
-                <h2>Part 3: Configure Claude Code</h2>
+            <section id="setup-part2">
+                <h2>Part 2: Project Setup (Per Project)</h2>
+                <p>Do these steps for each new project.</p>
 
-                <h3>1. Create Project Context File</h3>
-                <pre><code>mkdir .claude
-code .claude/CLAUDE.md  # or: nano .claude/CLAUDE.md</code></pre>
+                <h3>1. Create Project Directory</h3>
+                <pre><code>cd ~/Documents
+mkdir my-mui-project
+cd my-mui-project</code></pre>
 
-                <h3>2. Add This Content to CLAUDE.md</h3>
-                <pre><code># Project Context
-
-## Tech Stack
-- React 18 with TypeScript
-- Vite for build tooling
-- Material UI v6 (@mui/material)
-
-## Design System Rules
-
-### Component Library
-- ALWAYS use Material UI v6 components from '@mui/material'
-- Never create custom buttons, inputs, cards when MUI has them
-- Check MUI docs first before creating any UI component
-
-### Design Token Mapping (Figma → MUI)
-- Colors: Map to MUI theme palette (primary, secondary, error, etc.)
-- Spacing: Use theme.spacing() - 1 unit = 8px
-- Typography: Map to MUI variants (h1-h6, body1, body2, button)
-- Borders: Use theme.shape.borderRadius
-- Shadows: Use theme.shadows[0-24]
-
-### Component Patterns
-- Buttons: `&lt;Button variant="contained|outlined|text"&gt;`
-- Layout: `&lt;Container&gt;`, `&lt;Grid&gt;`, `&lt;Stack&gt;`, `&lt;Box&gt;`
-- Forms: `&lt;TextField&gt;`, `&lt;Select&gt;`, `&lt;Checkbox&gt;`
-- Cards: `&lt;Card&gt;` with `&lt;CardContent&gt;`, `&lt;CardActions&gt;`
-
-## Code Style
-- Use TypeScript for all files
-- Define Props interfaces above components
-- Use `sx` prop for styling with theme values
-- Never hardcode colors, spacing, or font sizes
-- Always make components responsive
-
-## File Organization
-```
-src/
-  components/     # Reusable UI components
-  pages/         # Page-level components
-  theme.ts       # MUI theme configuration
-```
-
-## Figma Integration
-When converting Figma designs:
-1. Use Figma MCP to fetch actual design data
-2. Extract design tokens first (colors, spacing, typography)
-3. Map Figma components to MUI equivalents
-4. Preserve visual hierarchy and spacing
-5. Use sx prop to match exact measurements
-6. Create theme overrides for custom colors</code></pre>
-
-                <p><strong>Save and exit</strong> (nano: Ctrl+O, Enter, Ctrl+X)</p>
-
-                <h3>3. Install VS Code Extension</h3>
-                <ol>
-                    <li>Open VS Code Extensions (Cmd+Shift+X)</li>
-                    <li>Search for "Claude Code"</li>
-                    <li>Install the official Anthropic extension</li>
-                    <li>Sign in with your Claude Pro/Max account when prompted</li>
-                </ol>
-            </section>
-
-            <section id="part4">
-                <h2>Part 4: Connect Figma MCP Server</h2>
-
-                <h3>1. Enable Figma MCP in Figma Desktop</h3>
-                <ol>
-                    <li><strong>Open Figma Desktop App</strong> (must be desktop, not web!)</li>
-                    <li><strong>Figma menu</strong> (top-left) → <strong>Preferences</strong></li>
-                    <li>Find <strong>"Dev Mode MCP Server"</strong></li>
-                    <li><strong>Enable</strong> it</li>
-                    <li>Note the URL: <code>http://127.0.0.1:3845/mcp</code></li>
-                </ol>
-
-                <div class="callout callout-warning">
-                    <strong>Important:</strong>
-                    Keep Figma Desktop running!
-                </div>
-
-                <h3>2. Add Figma MCP to Claude Code</h3>
-                <pre><code>cd ~/Documents/my-mui-project
-claude mcp add figma-desktop --transport http -- http://127.0.0.1:3845/mcp</code></pre>
-
-                <h3>3. Add MUI MCP Server</h3>
-                <pre><code>claude mcp add mui-mcp -- npx -y @mui/mcp@latest</code></pre>
-
-                <h3>4. Verify MCP Connections</h3>
-                <p>Restart VS Code, then in Claude Code panel, type:</p>
-                <pre><code>/mcp</code></pre>
-
-                <p>Should show:</p>
+                <h3>2. Initialize React + TypeScript + Vite Project</h3>
+                <pre><code>npm create vite@latest . -- --template react-ts</code></pre>
+                <p>When prompted:</p>
                 <ul>
-                    <li><span class="badge badge-success">✅ figma-desktop: connected</span></li>
-                    <li><span class="badge badge-success">✅ mui-mcp: connected</span></li>
+                    <li>Current directory is not empty, continue? <code>y</code></li>
                 </ul>
-            </section>
 
-            <section id="part5">
-                <h2>Part 5: The Workflow</h2>
+                <h3>3. Install Dependencies</h3>
+                <pre><code>npm install</code></pre>
 
-                <h3>1. Start Your Dev Server</h3>
-                <p><strong>Open a new terminal tab</strong> (Cmd+T in Terminal, or click + in VS Code terminal):</p>
-                <pre><code>cd ~/Documents/my-mui-project
-npm run dev</code></pre>
+                <h3>4. Install Material UI</h3>
+                <pre><code>npm install @mui/material @emotion/react @emotion/styled @mui/icons-material</code></pre>
 
-                <div class="callout callout-warning">
-                    <strong>Leave this running!</strong> Open new terminal tabs for other commands.
+                <h3>5. Initialize Git Repository</h3>
+                <pre><code>git init
+git add .
+git commit -m "Initial commit: React + TypeScript + Vite + MUI"</code></pre>
+
+                <h3>6. Create GitHub Repository</h3>
+                <pre><code>gh repo create my-mui-project --public --source=. --remote=origin --push</code></pre>
+
+                <div class="callout callout-success">
+                    <strong>Success!</strong> Your code is now on GitHub at: <code>https://github.com/YOUR_USERNAME/my-mui-project</code>
                 </div>
 
-                <h3>2. Create Design in Figma</h3>
-                <ol>
-                    <li>Open Figma Desktop</li>
-                    <li>Create your layout/component</li>
-                    <li>Switch to <strong>Dev Mode</strong> (toggle top-right)</li>
-                    <li>Select the frame you want to convert</li>
-                    <li>Copy the Figma file URL</li>
-                </ol>
+                <h3>7. Open Project in VS Code</h3>
+                <pre><code>code .</code></pre>
 
-                <h3>3. Convert Figma to Code</h3>
-                <p>Open Claude Code in VS Code:</p>
+                <h3>8. Create Copilot Instructions File</h3>
+                <p>Create a file called <code>.github/copilot-instructions.md</code> in your project:</p>
+                <pre><code>mkdir -p .github
+nano .github/copilot-instructions.md</code></pre>
+
+                <p>Paste this content:</p>
+                <pre><code># GitHub Copilot Instructions for Figma to Material UI Conversion
+
+## Project Context
+This project converts Figma designs to React components using Material UI v6 and TypeScript.
+
+## Code Generation Rules
+
+### 1. Always Use Material UI Components
+- Use MUI components instead of native HTML elements
+- Import from: `@mui/material` and `@mui/icons-material`
+- Example: `Button`, `TextField`, `Box`, `Container`, `Typography`
+
+### 2. TypeScript Types
+- All components must have proper TypeScript types
+- Define prop interfaces with `interface ComponentNameProps`
+- Use React.FC or explicit function typing
+
+### 3. Theme Integration
+- Use theme spacing: `theme.spacing(2)` not hardcoded pixels
+- Use theme colors: `theme.palette.primary.main`
+- Access theme with: `import { useTheme } from '@mui/material/styles'`
+
+### 4. Responsive Design
+- Use MUI's sx prop for styling
+- Use breakpoints: `{ xs: 12, sm: 6, md: 4 }` for Grid
+- Mobile-first approach
+
+### 5. File Organization
+- Components go in: `src/components/[ComponentName].tsx`
+- One component per file
+- Export as default
+
+### 6. Figma Design Extraction
+When fetching from Figma MCP:
+1. Extract all design tokens (colors, spacing, typography)
+2. Map Figma components to closest MUI equivalents
+3. Preserve exact spacing and visual hierarchy
+4. Extract text content and alt text for images
+
+### 7. Code Quality
+- Use functional components with hooks
+- Prefer composition over inheritance
+- Keep components focused and single-purpose
+- Add comments for complex logic
+
+### 8. Styling Approach
+- Use `sx` prop for component-level styles
+- Create theme customizations in `src/theme.ts`
+- Avoid inline styles
+- Use MUI's emotion-based styling
+
+## Example Component Structure
+
+```typescript
+import React from 'react';
+import { Box, Typography, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+
+interface MyComponentProps {
+  title: string;
+  onAction?: () => void;
+}
+
+const MyComponent: React.FC<MyComponentProps> = ({ title, onAction }) => {
+  const theme = useTheme();
+
+  return (
+    &lt;Box sx={{ p: theme.spacing(3) }}&gt;
+      &lt;Typography variant="h4" gutterBottom&gt;
+        {title}
+      &lt;/Typography&gt;
+      &lt;Button 
+        variant="contained" 
+        onClick={onAction}
+        sx={{ mt: theme.spacing(2) }}
+      &gt;
+        Click Me
+      &lt;/Button&gt;
+    &lt;/Box&gt;
+  );
+};
+
+export default MyComponent;
+```
+
+## When Converting from Figma
+1. Ask Copilot to fetch the Figma design via MCP
+2. Request extraction of design tokens
+3. Generate component with exact visual match
+4. Review and refine spacing/colors as needed</code></pre>
+
+                <p>Save and exit (Control+O, Enter, Control+X)</p>
+
+                <h3>9. Commit Instructions File</h3>
+                <pre><code>git add .github/copilot-instructions.md
+git commit -m "Add Copilot instructions for Figma/MUI workflow"
+git push</code></pre>
+
+                <h3>10. Test the Dev Server</h3>
+                <pre><code>npm run dev</code></pre>
+                <p>Open browser to: <code>http://localhost:5173</code></p>
+                <p>You should see the Vite + React default page.</p>
+
+                <div class="callout callout-info">
+                    <strong>Tip:</strong> Keep this terminal running. Open a new tab (Cmd+T) for other commands.
+                </div>
+            </section>
+
+            <section id="workflow">
+                <h2>The Workflow: Figma → Copilot → React</h2>
+                <p>Now that setup is complete, here's how to convert a Figma design to code.</p>
+
+                <h3>1. Prepare Your Figma Design</h3>
                 <ul>
-                    <li>Click the ⚡ spark icon (top-right when file is open)</li>
-                    <li>Or: Cmd+Shift+P → "Claude Code: Open"</li>
+                    <li>Create or open a design in <strong>Figma Desktop</strong></li>
+                    <li>Ensure Figma Desktop is running</li>
+                    <li>Copy the Figma file URL from browser (it will work with Desktop app)</li>
+                    <li>Example: <code>https://www.figma.com/file/ABC123/My-Design</code></li>
+                </ul>
+
+                <h3>2. Open Your Project in VS Code</h3>
+                <pre><code>cd ~/Documents/my-mui-project
+code .</code></pre>
+
+                <h3>3. Use Copilot Chat to Generate Component</h3>
+                <p><strong>Open Copilot Chat:</strong></p>
+                <ul>
+                    <li>Click the GitHub Copilot icon in VS Code sidebar</li>
+                    <li>Or press <code>Cmd+Shift+I</code> (Mac) / <code>Ctrl+Shift+I</code> (Windows)</li>
                 </ul>
 
                 <p><strong>Example prompt:</strong></p>
-                <pre><code>I have a Figma design at [paste URL].
+                <pre><code>I have a Figma design at [paste your Figma URL].
 
 Please:
-1. Fetch the design from Figma using the MCP
-2. Extract all design tokens (colors, spacing, typography)
-3. Convert it to React using Material UI v6 components
-4. Match the visual design exactly
-5. Create proper TypeScript types
-6. Save as src/components/[ComponentName].tsx
+1. Connect to the Figma MCP server and fetch this design
+2. Extract all design tokens (colors, spacing, typography, dimensions)
+3. Create a React component using Material UI v6 components
+4. Match the visual design exactly including all spacing and colors
+5. Use TypeScript with proper type definitions
+6. Save the component as src/components/DashboardCard.tsx
+7. Follow all rules in .github/copilot-instructions.md
 
-Follow all rules in CLAUDE.md.</code></pre>
+Make sure to:
+- Use theme.spacing() for all spacing values
+- Use MUI's sx prop for styling
+- Map design elements to appropriate MUI components
+- Add TypeScript interfaces for all props</code></pre>
 
-                <h3>4. Review and Accept Changes</h3>
+                <div class="callout callout-warning">
+                    <strong>Important:</strong> Copilot needs explicit instructions to use MCP. Always mention "Connect to Figma MCP" or "use Figma MCP server" in your prompts.
+                </div>
+
+                <h3>4. Review Generated Code</h3>
                 <ul>
-                    <li>Claude shows <strong>diffs</strong> for each file change</li>
-                    <li>Click <strong>Accept</strong> for changes you want</li>
-                    <li>Click <strong>Reject</strong> for changes you don't want</li>
-                    <li>Test in browser at <code>http://localhost:5173</code></li>
+                    <li>Copilot will show the generated component code</li>
+                    <li>Review the code in the chat window</li>
+                    <li>Click <strong>"Insert at Cursor"</strong> or <strong>"Apply in Editor"</strong></li>
+                    <li>Or copy the code manually to a new file</li>
                 </ul>
 
-                <h3>5. Commit and Push to GitHub</h3>
-                <p><strong>In a new terminal tab</strong> (not the one running dev server):</p>
+                <h3>5. Test in Browser</h3>
+                <ul>
+                    <li>Make sure dev server is running (<code>npm run dev</code>)</li>
+                    <li>Import your new component in <code>src/App.tsx</code></li>
+                    <li>Check <code>http://localhost:5173</code></li>
+                    <li>Verify the component matches your Figma design</li>
+                </ul>
+
+                <h3>6. Iterate and Refine</h3>
+                <p>If something doesn't look right, ask Copilot to adjust:</p>
+                <pre><code>The spacing between the title and description is too tight. 
+Use theme.spacing(3) instead of theme.spacing(1).
+
+The button should be variant="contained" not "outlined".</code></pre>
+
+                <h3>7. Commit Changes</h3>
+                <p><strong>In a new terminal tab</strong> (not the dev server tab):</p>
                 <pre><code># Stage changes
 git add .
 
-# Commit with message
-git commit -m "Add [component name] from Figma design"
+# Commit
+git commit -m "Add DashboardCard component from Figma design"
 
 # Push to GitHub
 git push</code></pre>
 
-                <p><strong>First push might need:</strong></p>
-                <pre><code>git push -u origin main</code></pre>
+                <div class="callout callout-success">
+                    <strong>Pro Tip:</strong> Use VS Code's built-in Git panel (Source Control icon in sidebar) instead of terminal commands if you prefer a GUI.
+                </div>
             </section>
 
             <section id="pitfalls">
                 <h2>Common Pitfalls & Solutions</h2>
 
-                <h3>"command not found: claude"</h3>
+                <h3>Copilot Can't Connect to Figma MCP</h3>
                 <div class="callout callout-danger">
-                    <strong>Solution:</strong> Add to PATH
-                    <pre><code>echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc</code></pre>
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Make sure <strong>Figma Desktop</strong> is running (not just web browser)</li>
+                        <li>Verify MCP is enabled in Figma Preferences → Experimental Features</li>
+                        <li>Check VS Code settings have correct MCP URL: <code>http://127.0.0.1:3845/mcp</code></li>
+                        <li>Restart Figma Desktop</li>
+                        <li>Restart VS Code</li>
+                        <li>Check if port 3845 is blocked by firewall</li>
+                    </ul>
+                </div>
+
+                <h3>Copilot Not Following Instructions</h3>
+                <div class="callout callout-warning">
+                    <strong>Solutions:</strong>
+                    <ul>
+                        <li>Verify <code>.github/copilot-instructions.md</code> exists</li>
+                        <li>Make sure VS Code setting <code>github.copilot.chat.codeGeneration.useInstructionFiles</code> is true</li>
+                        <li>Be more explicit in your prompts: "Follow the rules in copilot-instructions.md"</li>
+                        <li>Reference specific sections: "Use the TypeScript types pattern from our instructions"</li>
+                    </ul>
+                </div>
+
+                <h3>Generated Code Uses Wrong MUI Version</h3>
+                <div class="callout callout-warning">
+                    <strong>Solution:</strong> Explicitly mention version in prompts
+                    <pre><code>Use Material UI v6 (latest) components and styling patterns</code></pre>
                 </div>
 
                 <h3>"command not found: npm"</h3>
@@ -637,24 +764,13 @@ source ~/.zshrc</code></pre>
                     <pre><code>brew install node</code></pre>
                 </div>
 
-                <h3>"command not found: brew"</h3>
+                <h3>Can't Push to GitHub</h3>
                 <div class="callout callout-danger">
-                    <strong>Solution:</strong> Install Homebrew (see Part 1, Step 1)
-                </div>
-
-                <h3>Can't paste GitHub token in terminal</h3>
-                <div class="callout callout-info">
-                    <strong>Solution:</strong> Just paste (Cmd+V) - it won't show anything on screen (security feature), then press Enter
-                </div>
-
-                <h3>Figma MCP won't connect</h3>
-                <div class="callout callout-warning">
                     <strong>Solutions:</strong>
                     <ul>
-                        <li>Make sure Figma <strong>Desktop</strong> is running (not just web)</li>
-                        <li>Verify Dev Mode MCP is enabled in Figma Preferences</li>
-                        <li>Restart Figma Desktop</li>
-                        <li>Make sure URL is exactly: <code>http://127.0.0.1:3845/mcp</code></li>
+                        <li>Make sure you're logged in: <code>gh auth status</code></li>
+                        <li>First push needs: <code>git push -u origin main</code></li>
+                        <li>Check repository exists: <code>gh repo view</code></li>
                     </ul>
                 </div>
 
@@ -664,35 +780,34 @@ source ~/.zshrc</code></pre>
                     <pre><code>npm run dev</code></pre>
                 </div>
 
-                <h3>Can't commit - terminal stuck</h3>
-                <div class="callout callout-warning">
-                    <strong>Solution:</strong> You're in the dev server terminal. Open a <strong>new terminal tab</strong> (Cmd+T) for git commands
-                </div>
-
-                <h3>Changes not showing in browser</h3>
+                <h3>Changes Not Showing in Browser</h3>
                 <div class="callout callout-info">
                     <strong>Solutions:</strong>
                     <ul>
-                        <li>Check console for errors (F12)</li>
+                        <li>Check browser console for errors (F12)</li>
                         <li>Make sure dev server is running</li>
-                        <li>Hard refresh: Cmd+Shift+R</li>
+                        <li>Hard refresh: <code>Cmd+Shift+R</code> (Mac) / <code>Ctrl+Shift+R</code> (Windows)</li>
                         <li>Clear browser cache</li>
+                        <li>Check if component is properly imported in App.tsx</li>
                     </ul>
                 </div>
 
-                <h3>"fatal: The current branch main has no upstream branch"</h3>
-                <div class="callout callout-danger">
-                    <strong>Solution:</strong> First push needs:
-                    <pre><code>git push -u origin main</code></pre>
+                <h3>TypeScript Errors in Generated Code</h3>
+                <div class="callout callout-warning">
+                    <strong>Solution:</strong> Ask Copilot to fix
+                    <pre><code>There are TypeScript errors in this component. Please fix:
+- Add proper type definitions for all props
+- Ensure MUI component props are correctly typed
+- Fix any 'any' types</code></pre>
                 </div>
 
-                <h3>Terminal frozen in nano</h3>
+                <h3>MUI Components Not Styled Correctly</h3>
                 <div class="callout callout-info">
-                    <strong>Solution:</strong>
+                    <strong>Solution:</strong> Verify theme setup
                     <ul>
-                        <li>Save: Control+O, Enter</li>
-                        <li>Exit: Control+X</li>
-                        <li>(Use Control, not Command!)</li>
+                        <li>Check if <code>@emotion/react</code> and <code>@emotion/styled</code> are installed</li>
+                        <li>Ensure components use <code>sx</code> prop, not inline styles</li>
+                        <li>Ask Copilot: "Refactor this to use MUI's sx prop and theme values"</li>
                     </ul>
                 </div>
             </section>
@@ -700,56 +815,123 @@ source ~/.zshrc</code></pre>
             <section id="tips">
                 <h2>Tips & Best Practices</h2>
 
-                <h3>Multiple Terminal Tabs</h3>
+                <h3>Using Copilot Chat Effectively</h3>
+                <ul>
+                    <li><strong>Be specific:</strong> Include exact Figma URLs and component names</li>
+                    <li><strong>Reference files:</strong> Use <code>@filename</code> to give Copilot context (e.g., <code>@App.tsx</code>)</li>
+                    <li><strong>Iterate:</strong> Start with basic structure, then refine in follow-up prompts</li>
+                    <li><strong>Ask for explanations:</strong> "Explain why you chose this MUI component"</li>
+                </ul>
+
+                <h3>Managing Copilot Context</h3>
+                <ul>
+                    <li><strong>Select code:</strong> Highlight code in editor before asking questions</li>
+                    <li><strong>Use workspace context:</strong> Copilot sees your open files</li>
+                    <li><strong>Reference instruction file:</strong> Mention "Follow copilot-instructions.md" in prompts</li>
+                </ul>
+
+                <h3>Multiple Terminal Tabs Strategy</h3>
                 <ul>
                     <li><strong>Tab 1:</strong> Dev server (<code>npm run dev</code>) - leave running</li>
-                    <li><strong>Tab 2:</strong> Git commands, Claude Code CLI, etc.</li>
+                    <li><strong>Tab 2:</strong> Git commands and other CLI tasks</li>
+                    <li><strong>Tip:</strong> Press <code>Cmd+T</code> (Mac) / <code>Ctrl+T</code> (Windows) for new tab</li>
                 </ul>
 
-                <h3>VS Code Built-in Git</h3>
-                <p>Instead of terminal, use VS Code:</p>
+                <h3>Use VS Code's Built-in Git Features</h3>
+                <p>Instead of terminal commands, you can use VS Code's GUI:</p>
                 <ol>
-                    <li>Click Source Control icon (left sidebar)</li>
-                    <li>Stage changes with <code>+</code> icon</li>
-                    <li>Type commit message</li>
-                    <li>Click ✓ to commit</li>
-                    <li>Click <code>...</code> → Push</li>
+                    <li>Click <strong>Source Control</strong> icon (left sidebar)</li>
+                    <li>Stage files with <code>+</code> icon</li>
+                    <li>Type commit message in text box</li>
+                    <li>Click ✓ checkmark to commit</li>
+                    <li>Click <code>...</code> menu → <strong>Push</strong></li>
                 </ol>
 
-                <h3>Reference Files in Claude</h3>
-                <ul>
-                    <li>Type <code>@filename</code> to give Claude context</li>
-                    <li>Select code in editor - Claude sees it automatically</li>
-                </ul>
+                <h3>Iterative Refinement Prompts</h3>
+                <p>Examples of good follow-up prompts:</p>
+                <pre><code>// Spacing adjustment
+"Increase spacing between header and content section to 32px"
 
-                <h3>Always Review Diffs</h3>
-                <ul>
-                    <li>Don't blindly accept all changes</li>
-                    <li>Check that MUI components are used correctly</li>
-                    <li>Verify TypeScript types are proper</li>
-                </ul>
+// Component refinement
+"Make the card elevation more subtle - use elevation={2} instead of 4"
 
-                <h3>Iterative Refinement</h3>
-                <p>If Claude's output isn't perfect:</p>
-                <pre><code>The spacing is too tight. Use theme.spacing(3) instead of 2.
-The button should be variant="contained" not "outlined".</code></pre>
+// Responsive adjustment
+"Make this component stack vertically on mobile (xs/sm breakpoints)"
+
+// Type safety
+"Add proper TypeScript types for the onSubmit callback"
+
+// Accessibility
+"Add proper ARIA labels to all interactive elements"</code></pre>
 
                 <h3>Keep Figma Organized</h3>
                 <ul>
-                    <li>Name your frames clearly</li>
-                    <li>Use Figma variables for colors</li>
-                    <li>Document your design tokens</li>
-                    <li>Keep components organized</li>
+                    <li>Name your frames clearly (matches component names)</li>
+                    <li>Use Figma variables for colors (easier token extraction)</li>
+                    <li>Document spacing using Figma's spacing annotations</li>
+                    <li>Group related elements in frames</li>
+                    <li>Use consistent naming conventions</li>
                 </ul>
+
+                <h3>Component Library Pattern</h3>
+                <p>Create a component library structure:</p>
+                <pre><code>src/
+  components/
+    common/          # Reusable components
+      Button.tsx
+      Card.tsx
+    features/        # Feature-specific components
+      Dashboard/
+        DashboardCard.tsx
+        DashboardHeader.tsx
+    layout/          # Layout components
+      Header.tsx
+      Sidebar.tsx</code></pre>
+
+                <h3>Theme Customization</h3>
+                <p>Extract Figma design tokens to a theme file:</p>
+                <pre><code>// src/theme.ts
+import { createTheme } from '@mui/material/styles';
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2', // from Figma
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+  spacing: 8, // base spacing unit
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 500,
+    },
+  },
+});</code></pre>
             </section>
 
             <section id="reference">
                 <h2>Quick Reference Commands</h2>
+                
+                <h3>Development Commands</h3>
                 <pre><code># Start dev server
 npm run dev
 
-# New terminal tab
-Cmd + T
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Install new package
+npm install package-name</code></pre>
+
+                <h3>Git Commands</h3>
+                <pre><code># Check status
+git status
 
 # Stage all changes
 git add .
@@ -757,59 +939,133 @@ git add .
 # Commit
 git commit -m "message"
 
-# Push
+# Push to GitHub
 git push
 
-# Check MCP status (in Claude Code)
-/mcp
+# Pull latest changes
+git pull
 
-# Open file in VS Code
-code path/to/file
+# Create new branch
+git checkout -b feature-name</code></pre>
+
+                <h3>VS Code Shortcuts</h3>
+                <pre><code># Open Copilot Chat
+Cmd+Shift+I (Mac) / Ctrl+Shift+I (Windows)
+
+# Open Command Palette
+Cmd+Shift+P (Mac) / Ctrl+Shift+P (Windows)
+
+# Quick File Open
+Cmd+P (Mac) / Ctrl+P (Windows)
+
+# New Terminal Tab
+Cmd+T (Mac) / Ctrl+T (Windows)
+
+# Toggle Sidebar
+Cmd+B (Mac) / Ctrl+B (Windows)
+
+# Format Document
+Shift+Alt+F</code></pre>
+
+                <h3>Copilot Chat Quick Prompts</h3>
+                <pre><code># Fetch from Figma
+"Connect to Figma MCP and fetch design at [URL]"
+
+# Generate component
+"Create a Material UI component based on this Figma frame"
+
+# Fix errors
+"Fix all TypeScript errors in this file"
+
+# Refactor
+"Refactor this to use MUI sx prop instead of styled components"
+
+# Add types
+"Add proper TypeScript interfaces for all props"
+
+# Explain code
+"Explain what this component does"</code></pre>
+
+                <h3>Troubleshooting Commands</h3>
+                <pre><code># Check Node/npm versions
+node --version
+npm --version
+
+# Check GitHub CLI status
+gh auth status
 
 # Kill process on port
-lsof -ti:5173 | xargs kill -9</code></pre>
+lsof -ti:5173 | xargs kill -9  # Mac/Linux
+netstat -ano | findstr :5173   # Windows
+
+# Clear npm cache
+npm cache clean --force
+
+# Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install</code></pre>
             </section>
 
             <section id="next-steps">
                 <h2>Next Steps</h2>
+                
+                <h3>Level Up Your Workflow</h3>
                 <ol>
-                    <li><strong>Create a real design</strong> in Figma following your design system</li>
-                    <li><strong>Convert it</strong> using the workflow above</li>
-                    <li><strong>Refine</strong> by giving Claude feedback</li>
-                    <li><strong>Build out</strong> more components iteratively</li>
-                    <li><strong>Share</strong> your progress on GitHub!</li>
+                    <li><strong>Create a design system:</strong> Define your theme in <code>src/theme.ts</code> based on Figma variables</li>
+                    <li><strong>Build component library:</strong> Convert your most-used Figma components to reusable React components</li>
+                    <li><strong>Add Storybook:</strong> Document your components with <a href="https://storybook.js.org/" target="_blank">Storybook</a></li>
+                    <li><strong>Set up tests:</strong> Add Jest and React Testing Library</li>
+                    <li><strong>Configure CI/CD:</strong> Use GitHub Actions to auto-deploy</li>
+                    <li><strong>Deploy:</strong> Host on Vercel, Netlify, or GitHub Pages</li>
                 </ol>
+
+                <h3>Advanced Topics to Explore</h3>
+                <ul>
+                    <li><strong>Figma Variables:</strong> Learn to export Figma variables as CSS custom properties</li>
+                    <li><strong>Design Tokens:</strong> Use Style Dictionary to manage tokens</li>
+                    <li><strong>Component Variants:</strong> Handle Figma component variants in React</li>
+                    <li><strong>Animation:</strong> Add Framer Motion for animations matching Figma prototypes</li>
+                    <li><strong>Accessibility:</strong> Ensure WCAG compliance in generated components</li>
+                </ul>
+
+                <h3>Learning Resources</h3>
+                <ul>
+                    <li><a href="https://mui.com/material-ui/" target="_blank">Material UI Documentation</a></li>
+                    <li><a href="https://docs.github.com/en/copilot" target="_blank">GitHub Copilot Documentation</a></li>
+                    <li><a href="https://www.figma.com/developers" target="_blank">Figma Developer Documentation</a></li>
+                    <li><a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol (MCP)</a></li>
+                    <li><a href="https://vitejs.dev/" target="_blank">Vite Documentation</a></li>
+                </ul>
             </section>
 
             <section id="hosting">
-                <h2>Hosting This Guide</h2>
-                <p>To share this guide, you can:</p>
+                <h2>Sharing This Guide</h2>
+                <p>Want to share this workflow guide with your team?</p>
 
-                <h4>1. Create a GitHub Gist:</h4>
+                <h3>Option 1: GitHub Gist</h3>
                 <ul>
-                    <li>Go to https://gist.github.com</li>
-                    <li>Paste this content</li>
-                    <li>Name it: <code>figma-claude-mui-workflow.md</code></li>
-                    <li>Click "Create public gist"</li>
+                    <li>Go to <a href="https://gist.github.com" target="_blank">gist.github.com</a></li>
+                    <li>Save this HTML file as a gist</li>
                     <li>Share the URL</li>
                 </ul>
 
-                <h4>2. Add to your project README:</h4>
-                <pre><code>cp this-guide.md ~/Documents/my-mui-project/WORKFLOW.md
+                <h3>Option 2: Add to Project Repository</h3>
+                <pre><code># Save as WORKFLOW.md in your project
 git add WORKFLOW.md
-git commit -m "Add workflow documentation"
+git commit -m "Add Figma to Copilot workflow documentation"
 git push</code></pre>
 
-                <h4>3. Host on Notion/Confluence:</h4>
+                <h3>Option 3: Host Statically</h3>
                 <ul>
-                    <li>Copy/paste the content</li>
-                    <li>Share the page link</li>
+                    <li><strong>GitHub Pages:</strong> Free hosting for static HTML</li>
+                    <li><strong>Netlify:</strong> Drag and drop HTML file</li>
+                    <li><strong>Vercel:</strong> Deploy with one command</li>
                 </ul>
 
-                <h4>4. Personal website/blog:</h4>
+                <h3>Option 4: Internal Wiki</h3>
                 <ul>
-                    <li>Convert to HTML</li>
-                    <li>Host on GitHub Pages, Netlify, or Vercel</li>
+                    <li>Copy/paste content to Notion, Confluence, or your company wiki</li>
+                    <li>Add team-specific customizations</li>
                 </ul>
             </section>
         </article>
@@ -819,15 +1075,15 @@ git push</code></pre>
         <div class="footer-content">
             <div class="footer-links">
                 <a href="https://mui.com/material-ui/" target="_blank">Material UI Docs</a>
-                <a href="https://code.claude.com/docs" target="_blank">Claude Code Docs</a>
+                <a href="https://docs.github.com/en/copilot" target="_blank">GitHub Copilot Docs</a>
                 <a href="https://modelcontextprotocol.io/" target="_blank">MCP Documentation</a>
                 <a href="https://vitejs.dev/" target="_blank">Vite Docs</a>
                 <a href="https://cli.github.com/" target="_blank">GitHub CLI Docs</a>
             </div>
             <p>
-                <strong>Created:</strong> December 2025 | 
-                <strong>Last Updated:</strong> December 2025 | 
-                <strong>Version:</strong> 1.0
+                <strong>Created:</strong> January 2026 | 
+                <strong>Last Updated:</strong> January 2026<br>
+                <em>A comprehensive guide for converting Figma designs to React code with GitHub Copilot Pro and Material UI</em>
             </p>
         </div>
     </footer>
