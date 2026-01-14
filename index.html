@@ -442,7 +442,7 @@ npm --version</code></pre>
 
                 <h3>6. Configure Git</h3>
                 <pre><code>git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"</code></pre>
+git config --global user.email "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3aabca6a1fdb6beb2babf93b6abb2bea3bfb6fdb0bcbe">[email&#160;protected]</a>"</code></pre>
 
                 <h3>7. Install Figma Desktop</h3>
                 <ul>
@@ -464,29 +464,19 @@ git config --global user.email "your.email@example.com"</code></pre>
                     <strong>Critical:</strong> Figma Desktop must remain open while using MCP. The web version won't work.
                 </div>
 
-                <h3>9. Configure GitHub Copilot to Use Figma MCP</h3>
+                <h3>9. Enable Copilot Instruction Files (Optional but Recommended)</h3>
                 <ol>
                     <li>Open VS Code</li>
                     <li>Press <code>Cmd+Shift+P</code> (Mac) / <code>Ctrl+Shift+P</code> (Windows)</li>
                     <li>Type: <code>Preferences: Open User Settings (JSON)</code></li>
-                    <li>Add this configuration:</li>
+                    <li>Add this line to your settings:</li>
                 </ol>
                 <pre><code>{
-    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-    "github.copilot.chat.mcp": {
-        "enabled": true,
-        "servers": {
-            "figma": {
-                "command": "node",
-                "args": ["-e", "require('http').request('http://127.0.0.1:3845/mcp')"],
-                "url": "http://127.0.0.1:3845/mcp"
-            }
-        }
-    }
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true
 }</code></pre>
 
                 <div class="callout callout-info">
-                    <strong>Note:</strong> This configuration tells Copilot Chat how to connect to Figma's MCP server. Make sure Figma Desktop is running for this to work.
+                    <strong>Note:</strong> This allows Copilot to read project-specific instruction files. We'll configure MCP in the next section when we create the project.
                 </div>
             </section>
 
@@ -626,12 +616,54 @@ export default MyComponent;
 
                 <p>Save and exit (Control+O, Enter, Control+X)</p>
 
-                <h3>9. Commit Instructions File</h3>
-                <pre><code>git add .github/copilot-instructions.md
-git commit -m "Add Copilot instructions for Figma/MUI workflow"
+                <h3>9. Configure Figma MCP Connection</h3>
+                <p><strong>CRITICAL STEP:</strong> Create MCP configuration so Copilot can connect to Figma.</p>
+                
+                <p>Create the <code>.vscode</code> directory and <code>mcp.json</code> file:</p>
+                <pre><code>mkdir -p .vscode
+nano .vscode/mcp.json</code></pre>
+
+                <p>Paste this exact content:</p>
+                <pre><code>{
+    "servers": {
+        "figma-mcp": {
+            "url": "http://127.0.0.1:3845/mcp",
+            "type": "http"
+        }
+    },
+    "inputs": []
+}</code></pre>
+
+                <p>Save and exit (Control+O, Enter, Control+X)</p>
+
+                <div class="callout callout-warning">
+                    <strong>Why this is needed:</strong> GitHub Copilot requires a project-specific <code>.vscode/mcp.json</code> file to connect to MCP servers. Without this file, Copilot cannot access Figma's MCP server, even if Figma Desktop is running.
+                </div>
+
+                <div class="callout callout-info">
+                    <strong>Important notes:</strong>
+                    <ul>
+                        <li>The server name "figma-mcp" can be anything you want</li>
+                        <li>The URL must match Figma's MCP server: <code>http://127.0.0.1:3845/mcp</code></li>
+                        <li>The type must be "http" for HTTP-based MCP servers</li>
+                        <li>Figma Desktop must be running for this to work</li>
+                    </ul>
+                </div>
+
+                <h3>10. Commit Configuration Files</h3>
+                <pre><code>git add .github/copilot-instructions.md .vscode/mcp.json
+git commit -m "Add Copilot instructions and MCP configuration"
 git push</code></pre>
 
-                <h3>10. Test the Dev Server</h3>
+                <h3>11. Restart VS Code</h3>
+                <p><strong>Important:</strong> After creating <code>.vscode/mcp.json</code>, you must restart VS Code for Copilot to recognize the MCP server.</p>
+                <ul>
+                    <li>Close VS Code completely</li>
+                    <li>Reopen with <code>code .</code> or through the application</li>
+                    <li>Wait for Copilot to initialize (check status bar)</li>
+                </ul>
+
+                <h3>12. Test the Dev Server</h3>
                 <pre><code>npm run dev</code></pre>
                 <p>Open browser to: <code>http://localhost:5173</code></p>
                 <p>You should see the Vite + React default page.</p>
@@ -657,7 +689,27 @@ git push</code></pre>
                 <pre><code>cd ~/Documents/my-mui-project
 code .</code></pre>
 
-                <h3>3. Use Copilot Chat to Generate Component</h3>
+                <h3>3. Verify MCP Configuration (First Time Only)</h3>
+                <p><strong>Before starting, verify your MCP setup:</strong></p>
+                <div class="callout callout-info">
+                    <strong>Checklist:</strong>
+                    <ul>
+                        <li>✅ Figma Desktop is running</li>
+                        <li>✅ File <code>.vscode/mcp.json</code> exists in your project</li>
+                        <li>✅ VS Code was restarted after creating mcp.json</li>
+                    </ul>
+                </div>
+
+                <p><strong>Quick test:</strong> Open terminal in VS Code and run:</p>
+                <pre><code># Check if mcp.json exists
+cat .vscode/mcp.json
+
+# Test if Figma MCP server is responding
+curl http://127.0.0.1:3845/mcp</code></pre>
+
+                <p>If curl returns data (even if it looks like gibberish), Figma's MCP server is working! 🎉</p>
+
+                <h3>4. Use Copilot Chat to Generate Component</h3>
                 <p><strong>Open Copilot Chat:</strong></p>
                 <ul>
                     <li>Click the GitHub Copilot icon in VS Code sidebar</li>
@@ -686,7 +738,7 @@ Make sure to:
                     <strong>Important:</strong> Copilot needs explicit instructions to use MCP. Always mention "Connect to Figma MCP" or "use Figma MCP server" in your prompts.
                 </div>
 
-                <h3>4. Review Generated Code</h3>
+                <h3>5. Review Generated Code</h3>
                 <ul>
                     <li>Copilot will show the generated component code</li>
                     <li>Review the code in the chat window</li>
@@ -694,7 +746,7 @@ Make sure to:
                     <li>Or copy the code manually to a new file</li>
                 </ul>
 
-                <h3>5. Test in Browser</h3>
+                <h3>6. Test in Browser</h3>
                 <ul>
                     <li>Make sure dev server is running (<code>npm run dev</code>)</li>
                     <li>Import your new component in <code>src/App.tsx</code></li>
@@ -702,14 +754,14 @@ Make sure to:
                     <li>Verify the component matches your Figma design</li>
                 </ul>
 
-                <h3>6. Iterate and Refine</h3>
+                <h3>7. Iterate and Refine</h3>
                 <p>If something doesn't look right, ask Copilot to adjust:</p>
                 <pre><code>The spacing between the title and description is too tight. 
 Use theme.spacing(3) instead of theme.spacing(1).
 
 The button should be variant="contained" not "outlined".</code></pre>
 
-                <h3>7. Commit Changes</h3>
+                <h3>8. Commit Changes</h3>
                 <p><strong>In a new terminal tab</strong> (not the dev server tab):</p>
                 <pre><code># Stage changes
 git add .
@@ -730,14 +782,38 @@ git push</code></pre>
 
                 <h3>Copilot Can't Connect to Figma MCP</h3>
                 <div class="callout callout-danger">
-                    <strong>Solutions:</strong>
+                    <strong>Most Common Cause:</strong> Missing <code>.vscode/mcp.json</code> file!
+                    
+                    <p><strong>Step-by-step fix:</strong></p>
+                    <ol>
+                        <li><strong>Verify the file exists:</strong>
+                            <pre><code>ls -la .vscode/mcp.json</code></pre>
+                            If you get "No such file or directory", you need to create it (see Part 2, Step 9)
+                        </li>
+                        <li><strong>Verify file contents:</strong>
+                            <pre><code>cat .vscode/mcp.json</code></pre>
+                            Should show:
+                            <pre><code>{
+    "servers": {
+        "figma-mcp": {
+            "url": "http://127.0.0.1:3845/mcp",
+            "type": "http"
+        }
+    },
+    "inputs": []
+}</code></pre>
+                        </li>
+                        <li><strong>Restart VS Code</strong> after creating or modifying the file</li>
+                        <li><strong>Verify Figma Desktop is running</strong> (not just web browser)</li>
+                        <li><strong>Check MCP is enabled</strong> in Figma Preferences → Experimental Features</li>
+                    </ol>
+                    
+                    <p><strong>Other solutions if still not working:</strong></p>
                     <ul>
-                        <li>Make sure <strong>Figma Desktop</strong> is running (not just web browser)</li>
-                        <li>Verify MCP is enabled in Figma Preferences → Experimental Features</li>
-                        <li>Check VS Code settings have correct MCP URL: <code>http://127.0.0.1:3845/mcp</code></li>
                         <li>Restart Figma Desktop</li>
-                        <li>Restart VS Code</li>
                         <li>Check if port 3845 is blocked by firewall</li>
+                        <li>Try accessing <code>http://127.0.0.1:3845/mcp</code> in your browser to test if Figma's server is running</li>
+                        <li>Check VS Code Output panel (View → Output → GitHub Copilot) for error messages</li>
                     </ul>
                 </div>
 
@@ -1083,9 +1159,4 @@ git push</code></pre>
             <p>
                 <strong>Created:</strong> January 2026 | 
                 <strong>Last Updated:</strong> January 2026<br>
-                <em>A comprehensive guide for converting Figma designs to React code with GitHub Copilot Pro and Material UI</em>
-            </p>
-        </div>
-    </footer>
-</body>
-</html>
+                <em>A comprehensive guide for converting Figma des
